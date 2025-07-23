@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Girisudhan V - Portfolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="icon" type="image/png" href="assets/favicon.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <style>
+        #particles-js {
+            position: absolute; width: 100%; height: 100%;
+            z-index: 0;
+        }
+        .hero-content, header, section, footer { z-index: 1; position: relative; }
+        /* Custom scrollbar for a polished look */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #111827; }
+        ::-webkit-scrollbar-thumb { background: #0891b2; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #06b6d4; }
+    </style>
+    <script>
+        // Set theme on initial load
+        if (localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
+    </script>
+</head>
+<body class="bg-gray-100 dark:bg-gray-900 text-gray-800 dark:text-gray-200 font-sans transition-colors duration-300">
+
+    <div id="particles-js" class="hidden dark:block"></div>
+
+    <header class="bg-white/70 dark:bg-gray-900/70 backdrop-blur-sm sticky top-0 z-50 shadow-md dark:shadow-gray-800">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="/" class="text-2xl font-bold tracking-wider text-cyan-600 dark:text-cyan-400">Girisudhan V</a>
+            <div class="hidden md:flex items-center space-x-6">
+                <a href="#home" class="hover:text-cyan-500 dark:hover:text-cyan-300 transition-colors">Home</a>
+                <a href="#about" class="hover:text-cyan-500 dark:hover:text-cyan-300 transition-colors">About</a>
+                <a href="#skills" class="hover:text-cyan-500 dark:hover:text-cyan-300 transition-colors">Skills</a>
+                <a href="achievements.html" class="hover:text-cyan-500 dark:hover:text-cyan-300 transition-colors">Achievements</a>
+                <a href="contact.html" class="hover:text-cyan-500 dark:hover:text-cyan-300 transition-colors">Contact</a>
+                <button id="theme-toggle" class="text-xl leading-none">
+                    <i class="fa-solid fa-sun dark:hidden"></i>
+                    <i class="fa-solid fa-moon hidden dark:inline"></i>
+                </button>
+            </div>
+             <div class="md:hidden flex items-center">
+                 <button id="theme-toggle-mobile" class="text-xl mr-4 leading-none">
+                    <i class="fa-solid fa-sun dark:hidden"></i>
+                    <i class="fa-solid fa-moon hidden dark:inline"></i>
+                </button>
+                <button id="mobile-menu-button" class="text-2xl">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </nav>
+        <div id="mobile-menu" class="hidden md:hidden bg-white dark:bg-gray-800">
+            <a href="#home" class="block py-2 px-6 text-sm hover:bg-gray-200 dark:hover:bg-gray-700">Home</a>
+            <a href="#about" class="block py-2 px-6 text-sm hover:bg-gray-200 dark:hover:bg-gray-700">About</a>
+            <a href="#skills" class="block py-2 px-6 text-sm hover:bg-gray-200 dark:hover:bg-gray-700">Skills</a>
+            <a href="achievements.html" class="block py-2 px-6 text-sm hover:bg-gray-200 dark:hover:bg-gray-700">Achievements</a>
+            <a href="contact.html" class="block py-2 px-6 text-sm hover:bg-gray-200 dark:hover:bg-gray-700">Contact</a>
+        </div>
+    </header>
+
+    <section id="home" class="relative min-h-screen flex items-center justify-center text-center px-6">
+        <div class="hero-content">
+            <h1 class="text-5xl md:text-7xl font-extrabold mb-3" data-aos="fade-down">
+                Girisudhan V
+            </h1>
+            <p class="text-xl md:text-2xl text-gray-600 dark:text-gray-300 mb-8" data-aos="fade-up" data-aos-delay="200">
+                I am a <span id="typed-text" class="text-cyan-600 dark:text-cyan-400 font-semibold"></span>
+            </p>
+            <button id="resumeBtn" class="bg-cyan-600 hover:bg-cyan-700 dark:bg-cyan-500 dark:hover:bg-cyan-600 text-white font-bold py-3 px-6 rounded-full transition-transform transform hover:scale-105" data-aos="fade-up" data-aos-delay="400">
+                Generate Resume
+            </button>
+        </div>
+    </section>
+
+    <section id="about" class="py-20 bg-white dark:bg-gray-800/80">
+        <div class="container mx-auto px-6 text-center" data-aos="fade-up">
+            <h2 class="text-4xl font-bold mb-4">About Me</h2>
+            <p class="max-w-3xl mx-auto text-gray-600 dark:text-gray-300">
+                I am a passionate Electronics and Communication Engineering sophomore and a proud member of the Intel IoT Core Team. I am driven by the challenge of building innovative IoT solutions that solve real-world problems.
+            </p>
+        </div>
+    </section>
+
+    <section id="skills" class="py-20">
+        <div class="container mx-auto px-6 text-center">
+            <h2 class="text-4xl font-bold mb-12" data-aos="fade-up">Technical Skills</h2>
+            <div class="flex flex-wrap justify-center gap-8" data-aos="fade-up" data-aos-delay="200">
+                <div class="flex flex-col items-center p-4 transition-transform transform hover:-translate-y-2">
+                    <i class="fab fa-cuttlefish text-5xl text-cyan-500"></i>
+                    <p class="mt-2 text-lg font-semibold">C/C++</p>
+                </div>
+                <div class="flex flex-col items-center p-4 transition-transform transform hover:-translate-y-2">
+                    <i class="fab fa-python text-5xl text-cyan-500"></i>
+                    <p class="mt-2 text-lg font-semibold">Python</p>
+                </div>
+                <div class="flex flex-col items-center p-4 transition-transform transform hover:-translate-y-2">
+                    <i class="fas fa-microchip text-5xl text-cyan-500"></i>
+                    <p class="mt-2 text-lg font-semibold">IoT</p>
+                </div>
+                <div class="flex flex-col items-center p-4 transition-transform transform hover:-translate-y-2">
+                     <i class="fas fa-robot text-5xl text-cyan-500"></i>
+                    <p class="mt-2 text-lg font-semibold">Arduino</p>
+                </div>
+                 <div class="flex flex-col items-center p-4 transition-transform transform hover:-translate-y-2">
+                    <i class="fab fa-html5 text-5xl text-cyan-500"></i>
+                    <p class="mt-2 text-lg font-semibold">HTML5</p>
+                </div>
+                 <div class="flex flex-col items-center p-4 transition-transform transform hover:-translate-y-2">
+                    <i class="fab fa-css3-alt text-5xl text-cyan-500"></i>
+                    <p class="mt-2 text-lg font-semibold">CSS3</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section id="projects" class="py-20 bg-white dark:bg-gray-800/80">
+        <div class="container mx-auto px-6 text-center">
+            <h2 class="text-4xl font-bold mb-8" data-aos="fade-up">My Projects</h2>
+            <p class="text-xl text-gray-500 dark:text-gray-400" data-aos="fade-up" data-aos-delay="100">🚀 My project details will be added here soon. Stay tuned!</p>
+        </div>
+    </section>
+
+    <footer class="bg-gray-200 dark:bg-gray-900 py-8">
+        <div class="container mx-auto px-6 text-center">
+            <div class="flex justify-center space-x-6 mb-4">
+                <a href="#" class="text-gray-600 dark:text-gray-400 hover:text-cyan-500 transition-colors text-2xl"><i class="fab fa-linkedin"></i></a>
+                <a href="#" class="text-gray-600 dark:text-gray-400 hover:text-cyan-500 transition-colors text-2xl"><i class="fab fa-github"></i></a>
+                <a href="#" class="text-gray-600 dark:text-gray-400 hover:text-cyan-500 transition-colors text-2xl"><i class="fab fa-instagram"></i></a>
+                <a href="#" class="text-gray-600 dark:text-gray-400 hover:text-cyan-500 transition-colors text-2xl"><i class="fab fa-whatsapp"></i></a>
+            </div>
+            <p class="text-gray-500">&copy; 2025 Girisudhan V. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <button id="scroll-to-top" class="hidden fixed bottom-5 right-5 bg-cyan-600 hover:bg-cyan-700 text-white w-12 h-12 rounded-full shadow-lg transition-opacity duration-300">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <script src="js/particles.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="https://unpkg.com/typed.js@2.1.0/dist/typed.umd.js"></script>
+    <script src="js/script.js"></script>
+</body>
+</html>
