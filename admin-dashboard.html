@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+</head>
+<body class="bg-gray-800 text-white font-sans">
+
+    <div class="flex h-screen">
+        <aside class="w-64 bg-gray-900 p-6 flex-flex-col justify-between">
+            <div>
+                <h1 class="text-2xl font-bold text-cyan-400 mb-8">Admin Panel</h1>
+                <nav class="space-y-4">
+                    <a href="#" class="flex items-center p-2 bg-gray-700 rounded-lg text-white">
+                        <i class="fas fa-tachometer-alt mr-3"></i> Dashboard
+                    </a>
+                </nav>
+            </div>
+            <a href="index.html" class="flex items-center p-2 hover:bg-gray-700 rounded-lg mt-auto">
+                <i class="fas fa-sign-out-alt mr-3"></i> Logout
+            </a>
+        </aside>
+
+        <main class="flex-1 p-10 overflow-y-auto">
+            <h2 class="text-4xl font-bold mb-8">Portfolio Content Management</h2>
+            
+            <div class="bg-gray-900 p-6 rounded-lg shadow-lg mb-8">
+                <h3 class="text-2xl font-semibold text-cyan-400 mb-4">Manage Achievements</h3>
+                <form id="achievement-form" class="space-y-4">
+                    <input type="text" id="achievement-title" placeholder="Achievement Title" class="w-full bg-gray-700 text-white rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-cyan-500" required>
+                    <textarea id="achievement-desc" placeholder="Short Description" class="w-full bg-gray-700 text-white rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-cyan-500" rows="3" required></textarea>
+                    <input type="text" id="achievement-img" placeholder="Image URL (e.g., assets/achievement1.jpg)" class="w-full bg-gray-700 text-white rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-cyan-500" required>
+                    <button type="submit" class="w-full bg-cyan-600 hover:bg-cyan-700 font-bold py-2 px-4 rounded-lg transition-colors">Add Achievement</button>
+                </form>
+                
+                <hr class="my-6 border-gray-700">
+                <h4 class="text-xl font-semibold mb-4">Current Achievements</h4>
+                <div id="achievements-list" class="space-y-4">
+                    </div>
+            </div>
+
+            <div class="bg-gray-900 p-6 rounded-lg shadow-lg">
+                <h3 class="text-2xl font-semibold text-cyan-400 mb-4">Manage Projects</h3>
+                <form id="project-form" class="space-y-4">
+                    <input type="text" id="project-title" placeholder="Project Title" class="w-full bg-gray-700 text-white rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-cyan-500" required>
+                    <textarea id="project-desc" placeholder="Short Description" class="w-full bg-gray-700 text-white rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-cyan-500" rows="3" required></textarea>
+                     <input type="text" id="project-link" placeholder="Project Link (e.g., GitHub URL)" class="w-full bg-gray-700 text-white rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-cyan-500">
+                    <button type="submit" class="w-full bg-cyan-600 hover:bg-cyan-700 font-bold py-2 px-4 rounded-lg transition-colors">Add Project</button>
+                </form>
+
+                <hr class="my-6 border-gray-700">
+                <h4 class="text-xl font-semibold mb-4">Current Projects</h4>
+                <div id="projects-list" class="space-y-4">
+                     </div>
+            </div>
+        </main>
+    </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const achievementForm = document.getElementById('achievement-form');
+    const achievementsList = document.getElementById('achievements-list');
+    const projectForm = document.getElementById('project-form');
+    const projectsList = document.getElementById('projects-list');
+
+    // Load initial data from localStorage
+    let achievements = JSON.parse(localStorage.getItem('achievements')) || [];
+    let projects = JSON.parse(localStorage.getItem('projects')) || [];
+
+    // --- RENDER FUNCTIONS ---
+    const renderAchievements = () => {
+        achievementsList.innerHTML = '';
+        if (achievements.length === 0) {
+            achievementsList.innerHTML = `<p class="text-gray-500">No achievements added yet.</p>`;
+            return;
+        }
+        achievements.forEach(ach => {
+            const div = document.createElement('div');
+            div.className = 'bg-gray-800 p-4 rounded-lg flex justify-between items-center';
+            div.innerHTML = `
+                <div>
+                    <h5 class="font-bold">${ach.title}</h5>
+                    <p class="text-sm text-gray-400">${ach.description}</p>
+                </div>
+                <button data-id="${ach.id}" class="delete-achievement text-red-500 hover:text-red-700 text-lg">&times;</button>
+            `;
+            achievementsList.appendChild(div);
+        });
+    };
+    
+    const renderProjects = () => {
+        projectsList.innerHTML = '';
+         if (projects.length === 0) {
+            projectsList.innerHTML = `<p class="text-gray-500">No projects added yet.</p>`;
+            return;
+        }
+        projects.forEach(proj => {
+            const div = document.createElement('div');
+            div.className = 'bg-gray-800 p-4 rounded-lg flex justify-between items-center';
+            div.innerHTML = `
+                <div>
+                    <h5 class="font-bold">${proj.title}</h5>
+                    <p class="text-sm text-gray-400">${proj.description}</p>
+                </div>
+                <button data-id="${proj.id}" class="delete-project text-red-500 hover:text-red-700 text-lg">&times;</button>
+            `;
+            projectsList.appendChild(div);
+        });
+    };
+
+    // --- EVENT LISTENERS FOR ADDING ---
+    achievementForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const newAchievement = {
+            id: Date.now(),
+            title: document.getElementById('achievement-title').value,
+            description: document.getElementById('achievement-desc').value,
+            imageUrl: document.getElementById('achievement-img').value
+        };
+        achievements.push(newAchievement);
+        localStorage.setItem('achievements', JSON.stringify(achievements));
+        renderAchievements();
+        achievementForm.reset();
+    });
+
+    projectForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const newProject = {
+            id: Date.now(),
+            title: document.getElementById('project-title').value,
+            description: document.getElementById('project-desc').value,
+            link: document.getElementById('project-link').value
+        };
+        projects.push(newProject);
+        localStorage.setItem('projects', JSON.stringify(projects));
+        renderProjects();
+        projectForm.reset();
+    });
+
+    // --- EVENT LISTENERS FOR DELETING ---
+    achievementsList.addEventListener('click', (e) => {
+        if (e.target.classList.contains('delete-achievement')) {
+            const id = parseInt(e.target.getAttribute('data-id'));
+            achievements = achievements.filter(ach => ach.id !== id);
+            localStorage.setItem('achievements', JSON.stringify(achievements));
+            renderAchievements();
+        }
+    });
+
+    projectsList.addEventListener('click', (e) => {
+        if (e.target.classList.contains('delete-project')) {
+            const id = parseInt(e.target.getAttribute('data-id'));
+            projects = projects.filter(proj => proj.id !== id);
+            localStorage.setItem('projects', JSON.stringify(projects));
+            renderProjects();
+        }
+    });
+
+
+    // Initial render on page load
+    renderAchievements();
+    renderProjects();
+});
+</script>
+
+</body>
+</html>
